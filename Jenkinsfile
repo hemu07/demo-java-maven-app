@@ -1,25 +1,29 @@
-pipeline {
+def gv 
+
+pipeline {  
     agent any 
     tools {
         maven 'maven-3.9.6'
     }
     stages {
+        stage ("init") {
+            steps {
+                script {
+                    gv = load "script.groovy"
+                }
+            }
+        }
         stage ("build jar") {
             steps {
                 script {
-                    echo "building the app.."
-                    sh 'mvn package'
+                   gv.buildJarFile()
                 }
             }
         }
         stage ("build image") {
             steps {
                 script {
-                    echo "building the docker image.."
-                    withCredentials([usernamePassword(credentialsId: 'docker-hub-creds', passwordVariable: 'PASS', usernameVariable: 'USER')]){
-                        sh 'docker build -t hemu07/hemali_repo:jma-3.0 .'
-                        sh "echo $PASS | docker login -u $USER --password-stdin"
-                        sh 'docker push hemu07/hemali_repo:jma-3.0'
+                    gv.buildImage()
                     }
                 }
             }
@@ -27,7 +31,7 @@ pipeline {
         stage ("deploy") {
             steps {
                 script {
-                    echo "deploying the app.. "
+                    gv.deployApp()
                 }
             }
         }

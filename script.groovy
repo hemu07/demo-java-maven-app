@@ -1,14 +1,20 @@
-def buildApp() {
-    echo "Building the application..."
+def buildJarFile() {
+    echo "Building the application..."  
+    sh 'mvn package'
 }
 
-def testApp() {
-    echo "Testing the application..."
+def buildImage() {
+    echo "building the docker image.."
+    withCredentials([usernamePassword(credentialsId: 'docker-hub-creds', passwordVariable: 'PASS', usernameVariable: 'USER')]){
+    sh 'docker build -t hemu07/hemali_repo:jma-3.0 .'
+    sh "echo $PASS | docker login -u $USER --password-stdin"
+    sh 'docker push hemu07/hemali_repo:jma-3.0'
+    }
 }
+
 
 def deployApp() {
     echo "Deploying the application..."
-    echo "deploy version ${params.VERSION}"
 }
 
 return this
