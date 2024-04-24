@@ -1,18 +1,27 @@
 #!/usr/bin/env groovy
+def gv
 
 pipeline {
     agent any
 
     parameters {
         string (name: 'VERSION', defaultValue: '', description: 'version to deploy on prod server')
-        choice (name: 'VERSION', choices: ['1.1', '1.2', '1.3'], description: 'parameter type is choice for demo purposes-- mention the desc here')
-        booleanParam(name: 'executeTests', defaultValue: false, description: 'demo for boolean params')
+        choice (name: 'VERSION', choices: ['1.1', '1.2', '1.3'], description: 'paramter type is choice for demo purposes-- mention the desc here')
+        booleanParam(name: 'executeTests', defaultValue: true, description: 'demo for boolean params')
     }
     stages {
+        stage('init') {
+            steps {
+                script {
+                    gv = load "script.groovy"
+                }
+            }
+        }
+
         stage('build') {
             steps {
                 script {
-                    echo "Building the application..."
+                   gv.buildApp( )
                 }
             }
         }
@@ -24,15 +33,14 @@ pipeline {
             }
             steps {
                 script {
-                    echo "Testing the application..."
+                    gv.testApp()
                 }
             }
-        }
+        }  
         stage('deploy') {
             steps {
                 script {
-                    echo "Deploying the application..."
-                    echo "deploy version ${params.VERSION}"
+                    gv.deployApp()
                 }
             }
         }
