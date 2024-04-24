@@ -42,7 +42,7 @@ pipeline {
                 message "Select the env to deplot to: "
                 ok "Env selected"
                 parameters {
-                    choice (name: 'ENV', choices: ['dev.1', 'test', '1.staging', 'prod'], description: '')
+                    choice (name: 'ENV', choices: ['dev', 'test', 'staging', 'prod'], description: '')
                 } 
             }
             steps {
