@@ -25,11 +25,6 @@ pipeline {
             }
         }
         stage ("build image & push image") {
-            when {
-                expression {
-                    BRANCH_NAME == 'main'
-                }
-            }
             steps {
                 script {
                     buildImage 'hemu07/hemali_repo:jma-7.0'
