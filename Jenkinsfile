@@ -27,7 +27,7 @@ pipeline {
         stage ("build image") {
             steps {
                 script {
-                    buildImage()
+                    buildImage 'hemu07/hemali_repo:jma-6.0'
                     }
                 }
             }
