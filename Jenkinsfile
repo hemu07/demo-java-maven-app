@@ -24,10 +24,13 @@ pipeline {
                 }
             }
         }
-        stage ("build image") {
+        stage ("build image & push image") {
             steps {
                 script {
-                    buildImage 'hemu07/hemali_repo:jma-6.0'
+                    buildImage 'hemu07/hemali_repo:jma-7.0'
+                    dockerLogin()
+                    dockerPush 'hemu07/hemali_repo:jma-7.0'
+                    
                     }
                 }
             }
