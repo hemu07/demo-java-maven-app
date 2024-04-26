@@ -27,7 +27,7 @@ pipeline {
         stage ("deploy") {
             steps {
                 script {
-                    def dockerCmd = 'docker run -p 3000:3000 -d hemu07/hemali_repo:jma-3.0'
+                    def dockerCmd = 'docker run -p 8080:8080 -d hemu07/hemali_repo:jma-3.0'
                     sshagent(['ec2-ssh-connect']) {
                         sh "ssh -o StrictHostKeyChecking=no ubuntu@52.90.165.155 ${dockerCmd}"
                     }
