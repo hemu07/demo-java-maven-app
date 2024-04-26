@@ -27,7 +27,11 @@ pipeline {
         stage ("deploy") {
             steps {
                 script {
-                    echo "deploying the app.. "
+                    def dockerCmd = 'docker run -p 3000:3000 -d hemu07/node-app:1.0'
+                    sshagent(['ec2-ssh-connect']) {
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@52.90.165.155 ${dockerCmd}"
+                    }
+                    echo "deploying the app.. on ec2 server "
                 }
             }
         }
