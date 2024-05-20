@@ -5,7 +5,7 @@ pipeline {
     environment {
         BRANCH_NAME = 'jenkins-job'
         NEW_VERSION = '1.3.0'  // use this syntax when we need env var. in more than one stage
-        SERVER_CREDENTIALS = credentials('dummy-server')
+       // SERVER_CREDENTIALS = credentials('dummy-server')
     }
     tools {
         maven 'maven-3.9.6'
