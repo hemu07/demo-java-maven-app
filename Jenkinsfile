@@ -51,7 +51,7 @@ pipeline {
                 //usernamePassword as we defined that typ of crednetials in jenkins ui
                 withCredentials([usernamePassword(credentialsId: 'dummy-server', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) 
                 { 
-                    sh "some script ${USER} ${PASSWORD}"
+                    sh "some script ${USER} "
                 }
             }
         }
