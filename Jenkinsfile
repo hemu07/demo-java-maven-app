@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     environment {
-        BRANCH_NAME
+        BRANCH_NAME = 'jenkins-job'
         NEW_VERSION = '1.3.0'  // use this syntax when we need env var. in more than one stage
         SERVER_CREDENTIALS = credentials('dummy-server')
     }
@@ -32,7 +32,7 @@ pipeline {
 
             when { // use to give condition like execute test when branch is dev / test etc
                 expression {
-                    BRANCH_NAME == 'dev'  //BRANCH_NAME is the env variable that jenkins provides out of box
+                    BRANCH_NAME == 'jenkins-job'  //BRANCH_NAME is the env variable that jenkins provides out of box
                    // params.executeTests execute when true
                 }
             }
