@@ -54,7 +54,7 @@ pipeline {
                     sh "docker build -t hemu07/hemali_repo:jma-1.0 ."
                         sh "echo ${PAT} | docker login -u ${USER} --password-stdin"
                         sh "docker push hemu07/hemali_repo:jma-1.0"
-*/ {
+*/{
                  sh 'docker build -t ${DOCKER_IMAGE} .'
                 def dockerImage = docker.image("${DOCKER_IMAGE}")
                 docker.withRegistry('https://index.docker.io/v1/', "docker-cred") {
@@ -62,6 +62,7 @@ pipeline {
             }
         }
     }
+        }
 
         stage("deploy") {
 
