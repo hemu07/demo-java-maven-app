@@ -2,17 +2,17 @@ pipeline {
     
     agent any
 
-  /*  environment {
-      //  BRANCH_NAME
-        //NEW_VERSION = '1.3.0'  // use this syntax when we need env var. in more than one stage
-       // SERVER_CREDENTIALS = credentials('dummy-server')
-    
+   /* environment {
+        BRANCH_NAME
+        NEW_VERSION = '1.3.0'  // use this syntax when we need env var. in more than one stage
+        SERVER_CREDENTIALS = credentials('dummy-server')
     }*/
     tools {
         maven 'maven-3.9.6'
         //gradle
         //jdk
     }
+
 /*
     parameters {
         string(name: 'VERSION', defaultValue: '', description: 'version to deploy on prod')
@@ -47,13 +47,18 @@ pipeline {
         stage("build app image") {
             
             steps {
-                echo "building the application.. docker image "
+                echo "building the application.. docker image " /*
                 withCredentials([ 
                     usernamePassword(credentialsId: 'docker-hub-creds', usernameVariable: 'USER', passwordVariable: 'PAT')
                 ]) { 
                     sh "docker build -t hemu07/hemali_repo:jma-1.0 ."
                         sh "echo ${PAT} | docker login -u ${USER} --password-stdin"
                         sh "docker push hemu07/hemali_repo:jma-1.0"
+*/
+                 sh 'docker build -t ${DOCKER_IMAGE} .'
+                def dockerImage = docker.image("${DOCKER_IMAGE}")
+                docker.withRegistry('https://index.docker.io/v1/', "docker-cred") {
+                dockerImage.push()
             }
         }
     }
@@ -81,4 +86,3 @@ pipeline {
             echo "pipeline failed.. error code is sent to slack/mail "
         }
     }
-
