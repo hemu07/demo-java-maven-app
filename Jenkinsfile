@@ -18,6 +18,13 @@ pipeline {
             }
         } 
 
+        stage("push") {
+
+            steps {
+                echo "pushin image to repo.."
+            }
+        }
+        
         stage("deploy") {
 
             steps {
