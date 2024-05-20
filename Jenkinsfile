@@ -2,11 +2,13 @@ pipeline {
     
     agent any
 
-   /* environment {
+    environment {
         BRANCH_NAME
-        NEW_VERSION = '1.3.0'  // use this syntax when we need env var. in more than one stage
-        SERVER_CREDENTIALS = credentials('dummy-server')
-    }*/
+        //NEW_VERSION = '1.3.0'  // use this syntax when we need env var. in more than one stage
+       // SERVER_CREDENTIALS = credentials('dummy-server')
+        DOCKER_CREDENTIALS_ID = 'docker-hub-creds'
+    
+    }
     tools {
         maven 'maven-3.9.6'
         //gradle
@@ -48,7 +50,7 @@ pipeline {
             steps {
                 echo "building the application.. docker image "
                 withCredentials([ 
-                    usernamePassword(credentialsId: 'docker-hub-creds', usernameVariable: 'USER', passwordVariable: 'PAT')
+                    usernamePassword(credentialsId: 'env.DOCKER_CREDENTIALS_ID', usernameVariable: 'USER', passwordVariable: 'PAT')
                 ]) { 
                     sh "docker build -t hemu07/hemali_repo:jma-1.0 ."
                         sh "echo ${PAT} | docker login -u ${USER} --password-stdin"
