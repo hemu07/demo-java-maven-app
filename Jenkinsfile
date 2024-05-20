@@ -2,16 +2,39 @@ pipeline {
     
     agent any
 
+    environment {
+        NEW_VERSION = '1.3.0'  // use this syntax when we need env var. in more than one stage
+        SERVER_CREDENTIALS = credentials('dummy-server')
+    }
+    tools {
+        maven 'maven-3.9.6'
+        //gradle
+        //jdk
+    }
+
+    parameters {
+        string(name: 'VERSION', defaultValue: '',description: 'version to deploy on prod')
+        choice(name: 'VERSION', choices: ['1.1.0', '1.1.1', '1.1.2'], description: '')
+        booleanParam(name: 'executeTests', defaultValue: true, description: '')
+    }
+
     stages {
 
         stage("build") {
             
             steps {
-                echo "building the application.."
-            
+                echo "building the application.. ${NEW_VERSION}"
+            }
         }
 
         stage("test") {
+
+            when { // use to give condition like execute test when branch is dev / test etc
+                expression {
+                    BRANCH_NAME == 'dev'  //BRANCH_NAME is the env variable that jenkins provides out of box
+                   // params.executeTests execute when true
+                }
+            }
 
             steps {
                 echo "testing the app.."
@@ -21,7 +44,15 @@ pipeline {
         stage("deploy") {
 
             steps {
-                echo "deploying the app..."
+                echo "deploying the app... with version ${params.VERSION}"
+
+                // usernamePassword is groovy function that allows us to take username, password individually inside object
+                //usernamePassword as we defined that typ of crednetials in jenkins ui
+                withCredentials([ 
+                    usernamePassword(credentials: 'dummy-server', usernameVariable: USER, passwordVariable: PASSWORD)
+                ]) { 
+                    sh "some script ${USER} ${PASSWORD}"
+                }
             }
         }
     }
