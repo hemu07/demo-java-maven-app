@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     environment {
-        BRANCH_NAME
+      //  BRANCH_NAME
         //NEW_VERSION = '1.3.0'  // use this syntax when we need env var. in more than one stage
        // SERVER_CREDENTIALS = credentials('dummy-server')
         DOCKER_CREDENTIALS_ID = 'docker-hub-creds'
