@@ -31,7 +31,7 @@ pipeline {
 
             when { // use to give condition like execute test when branch is dev / test etc
                 expression {
-                    BRANCH_NAME == 'dev'  //BRANCH_NAME is the env variable that jenkins provides out of box
+                    BRANCH_NAME == 'jenkins-job'  //BRANCH_NAME is the env variable that jenkins provides out of box
                    // params.executeTests execute when true
                 }
             }
