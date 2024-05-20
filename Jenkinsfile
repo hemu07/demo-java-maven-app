@@ -50,7 +50,7 @@ pipeline {
                 // usernamePassword is groovy function that allows us to take username, password individually inside object
                 //usernamePassword as we defined that typ of crednetials in jenkins ui
                 withCredentials([ 
-                    usernamePassword(credentials: 'dummy-server', usernameVariable: USER, passwordVariable: PASSWORD)
+                    usernamePassword(credentials: 'dummy-server', usernameVariable: 'USER', passwordVariable: 'PASSWORD')
                 ]) { 
                     sh "some script ${USER} ${PASSWORD}"
                 }
