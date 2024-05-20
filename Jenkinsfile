@@ -43,7 +43,7 @@ pipeline {
             }
         } 
 
-        stage("build app image ") {
+        stage("build app image") {
             
             steps {
                 echo "building the application.. docker image "
@@ -55,6 +55,7 @@ pipeline {
                         sh "docker push hemu07/hemali_repo:jma-1.0"
             }
         }
+    }
 
         stage("deploy") {
 
@@ -79,4 +80,4 @@ pipeline {
             echo "pipeline failed.. error code is sent to slack/mail "
         }
     }
-}
+
