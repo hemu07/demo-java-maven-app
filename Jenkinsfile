@@ -48,7 +48,7 @@ pipeline {
             steps {
                 echo "building the application.. docker image "
                 withCredentials([ 
-                    usernamePassword(credentials: 'docker-hub-creds', usernameVariable: 'USER', passwordVariable: 'PAT')
+                    usernamePassword(credentialsId: 'docker-hub-creds', usernameVariable: 'USER', passwordVariable: 'PAT')
                 ]) { 
                     sh "docker build -t hemu07/hemali_repo:jma-1.0 ."
                         sh "echo ${PAT} | docker login -u ${USER} --password-stdin"
