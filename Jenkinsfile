@@ -23,7 +23,7 @@ pipeline {
         stage('build docker image') {
             steps {
                 script {
-                       buildImage()
+                    gv.buildImage()
                     }
                 }
             }
