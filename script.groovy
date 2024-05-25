@@ -40,5 +40,5 @@ def commitVersionUpdate() {
                     sh 'git commit -m "ci:version bump"'
                     sh 'git push origin HEAD:jenkins-job'
                     }
-}
+    }
 return this
