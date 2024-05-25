@@ -47,8 +47,8 @@ pipeline {
                 script {
                 gv.commitVersionUpdate()
                 }
+            }
         }
-    }
 
     }
 }
