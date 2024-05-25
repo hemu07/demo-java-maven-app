@@ -1,6 +1,8 @@
+
 def gv
 pipeline {
     agent any
+  
     tools {
         maven 'maven-3.9.6'
     }
@@ -21,9 +23,13 @@ pipeline {
             }
         }
         stage('build docker image') {
+
             steps {
                 script {
-                    gv.buildImage()
+                    buildImage 'hemu07/hemali_repo:jma-7.0'
+                    dockerLogin()
+                    dockerPush 'hemu07/hemali_repo:jma-7.0'
+                    
                     }
                 }
             }
