@@ -13,6 +13,13 @@ pipeline {
                 }
             }
         }
+        stage('increment version') {
+            steps {
+                script {
+                    
+                }
+            }
+        }
         stage('build jar') {
             steps {
                 script {
