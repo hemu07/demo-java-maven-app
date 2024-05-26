@@ -11,7 +11,7 @@ def buildJarFile() {
 }
 
 def buildImage() {
-    echo "building the dockerimage.."
+    echo "building the dockerimage..."
                     withCredentials([ 
                         usernamePassword(credentialsId: 'docker-hub-creds', usernameVariable: 'USER', passwordVariable: 'PAT')
                     ]) { 
