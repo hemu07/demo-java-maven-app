@@ -1,43 +1,32 @@
 #!/usr/bin/env groovy
-#test
-@Library('jenkins-shared-library')
-
-def gv 
-
-pipeline {  
-    agent any 
-    tools {
-        maven 'maven-3.9.6'
-    }
+pipeline {
+    agent any
     stages {
-        stage ("init") {
+        stage('build app') {
             steps {
                 script {
-                    gv = load "script.groovy"
+                    echo "building the app"
                 }
             }
         }
-        stage ("build jar") {
+
+        stage ('build image') {
             steps {
                 script {
-                   buildApp()
+                    echo "building the image"
                 }
             }
         }
-        stage ("build image & push image") {
-            steps {
-                script {
-                    buildImage 'hemu07/hemali_repo:jma-7.0'
-                    dockerLogin()
-                    dockerPush 'hemu07/hemali_repo:jma-7.0'
-                    
-                    }
-                }
+
+        stage ('deploy app on k8s') {
+            environment {
+                AWS_ACCESS_KEY_ID = credentials('jenkins_aws_access_key_id')
+                AWS_ACCESS_SECRET_KEY_ID = credentials('jenkins_aws_secret_access_key')
             }
-        stage ("deploy") {
             steps {
                 script {
-                    gv.deployApp()
+                    echo "deploying the image"
+                    sh 'kubectl create deploy nginx-deploy --image=nginx'
                 }
             }
         }
